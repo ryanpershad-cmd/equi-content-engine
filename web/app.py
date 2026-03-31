@@ -4,6 +4,9 @@ FastAPI backend serving the content engine UI.
 """
 import sys
 import json
+import uuid
+import shutil
+import logging
 from pathlib import Path
 from datetime import datetime, timezone
 
@@ -11,8 +14,8 @@ from datetime import datetime, timezone
 PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi import FastAPI, Request, UploadFile, File, Form
+from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
@@ -24,13 +27,25 @@ from db import (
     insert_calendar_entry, insert_compliance_log,
 )
 from ingest.raw_input import parse_raw_input
-from ingest.video_processor import process_transcript
+from ingest.video_processor import process_transcript, process_video_file
 from engine.tone_analyzer import analyze_tone
 from engine.content_generator import generate_content_package
 from engine.segment_extractor import extract_themed_segments, extract_social_quotes
 from engine.blog_writer import generate_blog_post
 from engine.calendar_builder import build_calendar
+from engine.clip_cutter import cut_all_clips
 from review.compliance import review_content
+
+logger = logging.getLogger(__name__)
+
+# Upload / clip storage
+UPLOAD_DIR = PROJECT_ROOT / "uploads"
+CLIPS_DIR = PROJECT_ROOT / "output" / "clips"
+UPLOAD_DIR.mkdir(exist_ok=True)
+CLIPS_DIR.mkdir(parents=True, exist_ok=True)
+
+ALLOWED_EXTENSIONS = {".mp4", ".mov", ".webm", ".mp3", ".wav", ".m4a"}
+MAX_UPLOAD_SIZE = 500 * 1024 * 1024  # 500 MB
 
 
 app = FastAPI(title="Equi Content Engine", version="1.0.0")
@@ -333,6 +348,252 @@ async def api_process_video(request: Request):
         },
         "quotes": social_quotes[:8],
     }
+
+
+# ── API: Workflow 2b — Video File Upload + Transcription ─────────────────────
+
+@app.post("/api/process-video-upload")
+async def api_process_video_upload(
+    file: UploadFile = File(...),
+    title: str = Form("Video Conversation"),
+    speakers: str = Form("Speaker"),
+    duration: str = Form("30"),
+):
+    """Upload a video/audio file → transcribe with Whisper → process → cut clips."""
+    # Validate file extension
+    ext = Path(file.filename or "").suffix.lower()
+    if ext not in ALLOWED_EXTENSIONS:
+        return JSONResponse(
+            {"error": f"Unsupported file type: {ext}. Use MP4, MOV, WebM, MP3, WAV, or M4A."},
+            status_code=400,
+        )
+
+    # Generate job ID and save file
+    job_id = str(uuid.uuid4())[:12]
+    job_dir = UPLOAD_DIR / job_id
+    job_dir.mkdir(parents=True, exist_ok=True)
+    file_path = job_dir / f"input{ext}"
+
+    try:
+        # Stream-save the uploaded file
+        with open(file_path, "wb") as f:
+            while chunk := await file.read(1024 * 1024):  # 1MB chunks
+                f.write(chunk)
+
+        file_size = file_path.stat().st_size
+        if file_size > MAX_UPLOAD_SIZE:
+            shutil.rmtree(job_dir, ignore_errors=True)
+            return JSONResponse(
+                {"error": "File too large. Maximum size is 500 MB."},
+                status_code=400,
+            )
+
+        # Parse form values
+        speakers_list = [s.strip() for s in speakers.split(",")]
+        duration_min = int(duration) if duration.isdigit() else 30
+
+        # Transcribe + process
+        video, transcript = process_video_file(
+            file_path,
+            title=title,
+            speakers=speakers_list,
+            duration_minutes=duration_min,
+            whisper_model="base",
+        )
+
+        # Extract segments & quotes
+        themed = extract_themed_segments(video)
+        social_quotes = extract_social_quotes(video, max_quotes=10)
+
+        # Generate blog post
+        blog = generate_blog_post(video, themed)
+
+        # Cut actual clips from the video
+        clip_data = [
+            {"title": c.title, "start_time": c.start_time, "end_time": c.end_time}
+            for c in video.clip_suggestions
+        ]
+        cut_results = []
+        is_video = ext in {".mp4", ".mov", ".webm"}
+        if is_video and clip_data:
+            try:
+                cut_results = cut_all_clips(file_path, clip_data, job_id=job_id)
+            except Exception as e:
+                logger.warning(f"Clip cutting failed: {e}")
+
+        # Generate social posts from themed segments
+        social_posts = []
+        for seg in themed[:3]:
+            seg_text = " ".join(s.text for s in seg.segments)
+            analysis = analyze_tone(seg_text, founder="itay")
+            parsed = parse_raw_input(seg_text, founder="itay")
+            pkg = generate_content_package(parsed, analysis)
+
+            social_posts.append({
+                "platform": "linkedin",
+                "content_type": "post",
+                "title": f"LinkedIn: {seg.theme}",
+                "body": pkg.linkedin,
+                "source": f"Video segment: {seg.theme}",
+            })
+            social_posts.append({
+                "platform": "twitter",
+                "content_type": "thread",
+                "title": f"X Thread: {seg.theme}",
+                "body": "\n\n".join(f"{i+1}/ {t}" for i, t in enumerate(pkg.twitter_thread)),
+                "source": f"Video segment: {seg.theme}",
+            })
+
+        # Quote tweets
+        for sq in social_quotes[:5]:
+            tweet = f'"{sq["quote"]}" — {sq["speaker"]}, {config.COMPANY_NAME}\n\n@join_equi'
+            if len(tweet) > 280:
+                tweet = tweet[:277] + "..."
+            social_posts.append({
+                "platform": "twitter",
+                "content_type": "quote_tweet",
+                "title": f"Quote: {sq['speaker']}",
+                "body": tweet,
+                "source": f"Video @ {sq['timestamp']}",
+            })
+
+        # Email teaser
+        speakers_joined = " and ".join(video.speakers)
+        topics_str = ", ".join(video.topics_covered[:3])
+        email_teaser = (
+            f"We just published a new conversation between {speakers_joined} on "
+            f"{video.title.lower()}.\n\n"
+            f"In {video.duration_minutes} minutes, they cover {topics_str} — and share the data "
+            f"driving our conviction in alternatives for RIA portfolios.\n\n"
+            f"Whether you're already allocating to alternatives or just starting to explore, "
+            f"this conversation will give you a clear framework.\n\n"
+            f"**[Watch the full conversation →]({config.WEBSITE})**"
+        )
+
+        # Build calendar
+        cal_items = [{"platform": "blog", "content_type": "article", "title": title,
+                      "body": blog[:200], "source": "Video"}]
+        cal_items.append({"platform": "newsletter", "content_type": "feature",
+                          "title": f"New: {title}", "body": email_teaser[:200], "source": "Video"})
+        cal_items.append({"platform": "email", "content_type": "teaser",
+                          "title": title, "body": email_teaser[:200], "source": "Video"})
+        cal_items.extend(social_posts)
+        calendar = build_calendar(cal_items, weeks=3)
+
+        # Build clips response with file info
+        clips = []
+        for i, c in enumerate(video.clip_suggestions):
+            clip_entry = {
+                "title": c.title,
+                "start_time": c.start_time,
+                "end_time": c.end_time,
+                "description": c.description,
+                "key_quote": c.key_quote,
+                "platform_fit": c.platform_fit,
+                "clip_file": None,
+            }
+            # Attach file path if clip was cut successfully
+            if i < len(cut_results) and cut_results[i].success:
+                clip_entry["clip_file"] = f"{job_id}/clip_{i + 1}.mp4"
+            clips.append(clip_entry)
+
+        # Save to database
+        conn = get_connection()
+        batch_id = insert_batch(
+            conn, workflow="video", founder="itay",
+            source_summary=title, piece_count=len(social_posts) + 2,
+        )
+        insert_piece(
+            conn, workflow="video", source_type="video_upload",
+            source_text=transcript[:2000], founder="itay",
+            platform="blog", content_type="article",
+            title=title, body=blog, status="review",
+        )
+        insert_piece(
+            conn, workflow="video", source_type="video_upload",
+            source_text=transcript[:2000], founder="itay",
+            platform="email", content_type="teaser",
+            title=f"Email: {title}", body=email_teaser, status="review",
+        )
+        for post in social_posts:
+            insert_piece(
+                conn, workflow="video", source_type="video_upload",
+                source_text=transcript[:2000], founder="itay",
+                platform=post["platform"], content_type=post["content_type"],
+                title=post["title"], body=post["body"], status="review",
+            )
+        for entry in calendar.entries:
+            insert_calendar_entry(
+                conn, batch_id=batch_id, piece_id=None,
+                platform=entry.platform, scheduled_date=entry.date,
+                scheduled_time=entry.time, content_preview=entry.content_preview,
+            )
+        conn.close()
+
+        return {
+            "success": True,
+            "batch_id": batch_id,
+            "video_file_id": job_id,
+            "video": {
+                "title": video.title,
+                "speakers": video.speakers,
+                "duration": video.duration_minutes,
+                "segments": len(video.segments),
+                "topics": video.topics_covered,
+                "word_count": video.total_words,
+            },
+            "clips": clips,
+            "blog": blog,
+            "social_posts": social_posts,
+            "email_teaser": email_teaser,
+            "calendar": {
+                "weeks": calendar.weeks,
+                "total_entries": calendar.total_posts,
+                "start_date": calendar.start_date,
+                "end_date": calendar.end_date,
+                "entries": [
+                    {
+                        "date": e.date,
+                        "day": e.day_of_week,
+                        "time": e.time,
+                        "platform": e.platform,
+                        "content_type": e.content_type,
+                        "title": e.title,
+                        "content_preview": e.content_preview,
+                        "status": e.status,
+                    }
+                    for e in calendar.entries
+                ],
+            },
+            "quotes": social_quotes[:8],
+        }
+
+    except Exception as e:
+        logger.exception(f"Video upload processing failed: {e}")
+        return JSONResponse(
+            {"error": f"Processing failed: {str(e)}"},
+            status_code=500,
+        )
+
+
+# ── API: Clip Download ──────────────────────────────────────────────────────
+
+@app.get("/api/clips/{job_id}/{filename}")
+async def api_download_clip(job_id: str, filename: str):
+    """Download a generated clip file."""
+    # Sanitize inputs
+    if "/" in job_id or ".." in job_id or "/" in filename or ".." in filename:
+        return JSONResponse({"error": "Invalid path"}, status_code=400)
+
+    clip_path = CLIPS_DIR / job_id / filename
+    if not clip_path.exists():
+        return JSONResponse({"error": "Clip not found"}, status_code=404)
+
+    return FileResponse(
+        path=str(clip_path),
+        media_type="video/mp4",
+        filename=filename,
+    )
 
 
 # ── API: Content Management ─────────────────────────────────────────────────

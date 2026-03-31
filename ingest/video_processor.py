@@ -1,9 +1,15 @@
 """
 Video/transcript processor for Workflow 2.
 Parses long-form transcripts, identifies speakers, segments, and key moments.
+Supports Whisper-based transcription from video/audio files.
 """
 import re
+import logging
+import subprocess
+from pathlib import Path
 from dataclasses import dataclass, field
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -225,6 +231,118 @@ def detect_topics(segments: list[TranscriptSegment]) -> list[str]:
         if any(kw in all_text for kw in keywords):
             found.append(topic)
     return found
+
+
+def transcribe_file(file_path: str | Path, model_name: str = "base") -> str:
+    """
+    Transcribe a video or audio file using OpenAI Whisper (local model).
+
+    Args:
+        file_path: Path to video/audio file (mp4, mov, webm, mp3, wav, m4a)
+        model_name: Whisper model size ('tiny', 'base', 'small', 'medium', 'large')
+
+    Returns:
+        Timestamped transcript string in the format:
+            [HH:MM:SS] Speaker: text
+
+    Note: Whisper doesn't do speaker diarization, so all segments are attributed
+    to 'Speaker'. For multi-speaker identification, a separate diarization step
+    would be needed.
+    """
+    file_path = Path(file_path)
+    if not file_path.exists():
+        raise FileNotFoundError(f"File not found: {file_path}")
+
+    # Extract audio to wav if it's a video file (Whisper works best with audio)
+    audio_path = file_path
+    video_exts = {".mp4", ".mov", ".webm"}
+    if file_path.suffix.lower() in video_exts:
+        audio_path = file_path.with_suffix(".wav")
+        logger.info(f"Extracting audio from video: {file_path} → {audio_path}")
+        result = subprocess.run(
+            [
+                "ffmpeg", "-y",
+                "-i", str(file_path),
+                "-vn",                    # no video
+                "-acodec", "pcm_s16le",   # PCM 16-bit
+                "-ar", "16000",           # 16kHz (Whisper's expected rate)
+                "-ac", "1",               # mono
+                str(audio_path),
+            ],
+            capture_output=True,
+            text=True,
+            timeout=300,
+        )
+        if result.returncode != 0:
+            raise RuntimeError(f"Audio extraction failed: {result.stderr[-300:]}")
+
+    try:
+        import whisper
+    except ImportError:
+        raise ImportError(
+            "openai-whisper is not installed. Install with: pip install openai-whisper"
+        )
+
+    logger.info(f"Loading Whisper model '{model_name}'...")
+    model = whisper.load_model(model_name)
+
+    logger.info(f"Transcribing: {audio_path}")
+    result = model.transcribe(
+        str(audio_path),
+        verbose=False,
+        word_timestamps=False,
+    )
+
+    # Build timestamped transcript
+    lines = []
+    for segment in result.get("segments", []):
+        start_secs = int(segment["start"])
+        timestamp = seconds_to_timestamp(start_secs)
+        text = segment["text"].strip()
+        if text:
+            lines.append(f"[{timestamp}] Speaker: {text}")
+
+    transcript = "\n\n".join(lines)
+
+    # Clean up extracted audio if we created it
+    if audio_path != file_path and audio_path.exists():
+        try:
+            audio_path.unlink()
+        except OSError:
+            pass
+
+    logger.info(f"Transcription complete: {len(lines)} segments")
+    return transcript
+
+
+def process_video_file(
+    file_path: str | Path,
+    title: str = "",
+    speakers: list[str] | None = None,
+    duration_minutes: int = 30,
+    whisper_model: str = "base",
+) -> tuple[ProcessedVideo, str]:
+    """
+    Full pipeline: transcribe a video/audio file, then process the transcript.
+
+    Args:
+        file_path: Path to video/audio file
+        title: Video title
+        speakers: Speaker names
+        duration_minutes: Estimated duration
+        whisper_model: Whisper model size to use
+
+    Returns:
+        Tuple of (ProcessedVideo, raw_transcript_text)
+    """
+    transcript = transcribe_file(file_path, model_name=whisper_model)
+    video = process_transcript(
+        transcript,
+        title=title,
+        speakers=speakers,
+        duration_minutes=duration_minutes,
+    )
+    return video, transcript
 
 
 def process_transcript(text: str, title: str = "", speakers: list[str] | None = None,
