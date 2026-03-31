@@ -42,13 +42,18 @@ Each piece is automatically reviewed for SEC compliance, assigned a status, and 
 
 ### Workflow 2: Video → Content Library
 
-Process a 30-45 minute video transcript into a full content library:
+Accept a video file or transcript and produce a full content library:
 
+- **Video upload** — MP4, MOV, WebM, MP3, WAV, M4A (up to 500MB)
+- **Automatic transcription** — Whisper (OpenAI, local) with timestamps
 - **5 clip suggestions** with timestamps, titles, and key quotes
+- **Actual video clips** — ffmpeg cuts the source video into downloadable MP4 segments
 - **Blog post** (800-1200 words)
 - **8-10 social media posts** (LinkedIn + X/Twitter)
 - **Email teaser** (200 words)
 - **3-week content calendar** (CSV + JSON) scheduling assets across platforms
+
+Two input modes: upload a raw video file (transcription + clip cutting handled automatically) or paste an existing transcript.
 
 ---
 
@@ -78,7 +83,7 @@ A modern single-page web interface for operating the content engine:
 |------|-------------|
 | **Dashboard** | Pipeline stats, recent activity feed |
 | **Quick Content** | Paste raw input → generate multi-platform content, review compliance, approve/schedule |
-| **Video Content** | Process transcripts → view clips, blog, social posts, calendar |
+| **Video Content** | Upload video files or paste transcripts → auto-transcribe with Whisper → view clips with download links, blog, social posts, calendar |
 | **Calendar** | Filter scheduled content by platform and date |
 | **Review Queue** | Approve, reject, or edit pending content |
 
@@ -101,7 +106,8 @@ equi-content-engine/
 │   ├── content_generator.py    # Claude API + template fallbacks
 │   ├── segment_extractor.py    # Theme extraction from video segments
 │   ├── blog_writer.py          # Long-form blog post generation
-│   └── calendar_builder.py     # Multi-week content calendar
+│   ├── calendar_builder.py     # Multi-week content calendar
+│   └── clip_cutter.py          # ffmpeg video clip cutting
 │
 ├── review/
 │   └── compliance.py           # SEC compliance flagging + approval workflow
@@ -139,6 +145,12 @@ pip install -r requirements.txt
 ```
 
 Dependencies: `anthropic`, `python-dotenv`, `fastapi`, `uvicorn`, `jinja2`, `python-multipart`
+
+For video upload & clip cutting (Workflow 2 full pipeline):
+```bash
+pip install openai-whisper
+apt install ffmpeg    # or brew install ffmpeg on macOS
+```
 
 ### Environment variables (`.env`)
 
