@@ -1,0 +1,155 @@
+[
+  {
+    "input": {
+      "id": "input_1",
+      "text": "So I was looking at the numbers this morning and it's striking \u2014 RIAs are sitting on 60/40 portfolios that had a 95% correlation between stocks and bonds in 2022. That's not diversification, that's just concentration with extra steps. The firms we're talking to, the $2 to $10 billion independent RIAs, they know this intuitively but they don't have the infrastructure to access institutional-quality hedge fund programs. That's literally what we built Equi to solve. The tender offer fund we're launching is going to be a game-changer because it gives RIAs a way to allocate their clients into a diversified hedge fund portfolio without the operational nightmare of managing five separate LP agreements and quarterly capital calls.",
+      "founder": "itay",
+      "label": "Voice Memo \u2014 60/40 Correlation & Tender Offer Fund",
+      "description": "Itay's voice memo about portfolio correlation breakdown and the tender offer fund launch"
+    },
+    "analysis": {
+      "topic": "Operational Infrastructure Gap",
+      "sentiment": "cautious",
+      "angle": "The hidden cost of DIY alternatives: operational complexity kills returns"
+    },
+    "content": {
+      "linkedin": "In 2022, stocks and bonds had a 95% correlation. So much for diversification.\n\nLet that sink in for a moment. Because the implications for how we construct portfolios \u2014 and how we serve clients \u2014 are significant. Every week, I talk to advisors who are grappling with this exact challenge, and the conversation always lands in the same place.\n\nWe're in a post-2022 correlation regime shift environment, and what we're hearing from the independent RIAs we work with \u2014 firms managing $2B to $15B \u2014 is consistent: the old playbook isn't working anymore. The assumptions that guided portfolio construction for the last two decades are breaking down in real time, and the advisors who recognize this first will have a structural advantage.\n\nSo I was looking at the numbers this morning and it's striking \u2014 RIAs are sitting on 60/40 portfolios that had a 95% correlation between stocks and bonds in 2022.\n\nThis is a pattern we're seeing across the industry. The independent RIA channel \u2014 firms with $1B to $30B in AUM \u2014 is at an inflection point. Client expectations are rising, competitive pressure from wirehouses and multi-family offices is intensifying, and the traditional portfolio toolkit isn't cutting it anymore.\n\nThe firms we're talking to, the $2 to $10 billion independent RIAs, they know this intuitively but they don't have the infrastructure to access institutional-quality hedge fund programs.\n\nThe firms that figure this out first won't just retain their existing clients \u2014 they'll attract new ones. Because in a world where every advisor has access to the same ETFs and model portfolios, alternatives capability is a genuine differentiator.\n\nHere's the institutional reality: endowments like Yale and Stanford have allocated 25-40% to alternatives for two decades, generating meaningfully higher risk-adjusted returns than traditional 60/40 benchmarks. Pensions and sovereign wealth funds have followed the same playbook. Yet the average independent RIA allocates less than 5% to alternatives. That gap represents both a risk to client portfolios and an enormous opportunity for advisors who close it.\n\nThis is exactly why we built Equi's Tender Offer Fund. We wanted to eliminate the three biggest barriers RIAs face when accessing alternatives: the access gap (institutional minimums are too high), the diligence gap (evaluating hedge fund managers requires specialized expertise), and the operations gap (managing LP agreements, capital calls, and reporting across multiple funds is an operational nightmare).\n\nOne allocation. Full diversification. Institutional-quality diligence. Professional operations. That's the model.\n\nThe question isn't whether alternatives belong in advisor portfolios \u2014 the data has settled that debate. The question is whether advisors have the right partner and infrastructure to access them with institutional rigor.\n\nThe advisors who build this capability now will compound that advantage for years. The ones who wait will spend the next three years building what they could have accessed today.\n\nWhat are you seeing in your practice? How are you thinking about alternatives allocations for your clients? I'd love to hear \u2014 drop a comment or send me a message.\n\n#Operations #RIA #AlternativeInvestments #Diversification #PortfolioConstruction",
+      "newsletter": "**Operational Infrastructure Gap**\n\n\nIn 2022, stocks and bonds had a 95% correlation. So much for diversification.\n\n\n**The data is striking:** $10 billion. This is the kind of structural shift that separates advisors who are positioned for the next decade from those still running yesterday's playbook.\n\nAs our CIO Itay puts it: \"So I was looking at the numbers this morning and it's striking \u2014 RIAs are sitting on 60/40 portfolios that had a 95% correlation between stocks and bonds in 2022.\"\n\nThis is precisely the challenge Equi's Tender Offer Fund was built to address. One allocation gives advisors diversified, institutional-quality access to alternatives \u2014 without the operational complexity of managing multiple fund relationships, LP agreements, and capital calls.\n\nThe advisors who move now will have a structural advantage. The ones who wait will spend the next three years building what they could have accessed today.\n\n**\u2192 [Schedule a 15-minute call](https://www.joinequi.com) to learn how Equi can help your practice access institutional alternatives.**",
+      "twitter_thread": [
+        "In 2022, stocks and bonds had a 95% correlation. So much for diversification. \ud83e\uddf5",
+        "The data: $10 billion. This is not a blip \u2014 it's a structural shift.",
+        "So I was looking at the numbers this morning and it's striking \u2014 RIAs are sitting on 60/40 portfolios that had a 95% correlation between stocks and bonds in 2022.",
+        "That's not diversification, that's just concentration with extra steps.",
+        "The firms we're talking to, the $2 to $10 billion independent RIAs, they know this intuitively but they don't have the infrastructure to access institutional-quality hedge fund programs.",
+        "This is why @join_equi exists \u2014 institutional alternatives access for independent RIAs. One allocation, full diversification.",
+        "If you're an RIA thinking about alternatives, let's talk. DM or visit https://www.joinequi.com @join_equi"
+      ],
+      "email": "We've been watching an important shift in how advisors approach portfolio construction, and wanted to share our perspective. The numbers are striking: $10 billion.\n\nSo I was looking at the numbers this morning and it's striking \u2014 RIAs are sitting on 60/40 portfolios that had a 95% correlation between stocks and bonds in 2022.\n\nThis is the core challenge we hear from advisors every day: the investment case for alternatives is clear, but the infrastructure to execute is missing. Our Tender Offer Fund is specifically designed for firms like yours \u2014 providing institutional-quality alternatives access through a single, operationally simple allocation.\n\nWe'd welcome the chance to walk through how Equi's approach could complement your current allocation strategy. Happy to set up a brief call at your convenience."
+    },
+    "compliance": {
+      "linkedin": {
+        "passed": true,
+        "flags": 0,
+        "warnings": 0
+      },
+      "newsletter": {
+        "passed": true,
+        "flags": 0,
+        "warnings": 0
+      },
+      "email": {
+        "passed": true,
+        "flags": 0,
+        "warnings": 0
+      },
+      "twitter": {
+        "passed": true,
+        "flags": 0,
+        "warnings": 0
+      }
+    },
+    "method": "template"
+  },
+  {
+    "input": {
+      "id": "input_2",
+      "text": "- BlackRock just told investors to increase hedge fund allocations\n- This validates what we've been saying for 2 years\n- The difference: most RIAs can't access institutional hedge funds\n- Equi's fund of funds solves the access + diligence + operations gap\n- Our tender offer fund makes this even simpler \u2014 one allocation, full diversification\n- Key stat: hedge fund industry saw $21B in net inflows Q1 2025",
+      "founder": "tory",
+      "label": "Bullet Points \u2014 BlackRock Validation & Industry Momentum",
+      "description": "Tory's bullet points on BlackRock's hedge fund recommendation and industry inflows"
+    },
+    "analysis": {
+      "topic": "Industry Validation & Momentum",
+      "sentiment": "bullish",
+      "angle": "The smart money is moving \u2014 and independent advisors can't afford to wait"
+    },
+    "content": {
+      "linkedin": "$21B in net inflows to hedge funds in Q1 2025. The tide is turning.\n\nLet that sink in for a moment. Because the implications for how we construct portfolios \u2014 and how we serve clients \u2014 are significant. Every week, I talk to advisors who are grappling with this exact challenge, and the conversation always lands in the same place.\n\nWe're in a hedge fund industry inflow momentum; major allocator endorsement of alternatives environment, and what we're hearing from the independent RIAs we work with \u2014 firms managing $2B to $15B \u2014 is consistent: the old playbook isn't working anymore. The assumptions that guided portfolio construction for the last two decades are breaking down in real time, and the advisors who recognize this first will have a structural advantage.\n\nBlackRock just told investors to increase hedge fund allocations\n\nThis isn't a fringe view \u2014 it's rapidly becoming consensus across the institutional community. And when the largest allocators in the world start moving in a direction, independent advisors need to pay attention.\n\nThe numbers tell the story: $21B. This validates what we've been saying for 2 years For years, alternatives were considered a 'nice to have' for advisor portfolios. That framing is outdated. They're now a critical component of any serious portfolio construction effort.\n\nThe difference: most RIAs can't access institutional hedge funds\n\nI hear this from advisors every week. The desire to allocate is there \u2014 what's missing is the infrastructure, the diligence capability, and the operational support to execute it at scale.\n\nEqui's fund of funds solves the access + diligence + operations gap\n\nOur tender offer fund makes this even simpler \u2014 one allocation, full diversification\n\nHere's the institutional reality: endowments like Yale and Stanford have allocated 25-40% to alternatives for two decades, generating meaningfully higher risk-adjusted returns than traditional 60/40 benchmarks. Pensions and sovereign wealth funds have followed the same playbook. Yet the average independent RIA allocates less than 5% to alternatives. That gap represents both a risk to client portfolios and an enormous opportunity for advisors who close it.\n\nIt's worth noting that firms like BlackRock are actively increasing their focus on alternative allocations for the wealth channel. The direction of travel is clear \u2014 and the question for independent advisors isn't whether to allocate, but how to do it with institutional rigor.\n\nThis is exactly why we built Equi's Custom Fund of Funds and Tender Offer Fund. We wanted to eliminate the three biggest barriers RIAs face when accessing alternatives: the access gap (institutional minimums are too high), the diligence gap (evaluating hedge fund managers requires specialized expertise), and the operations gap (managing LP agreements, capital calls, and reporting across multiple funds is an operational nightmare).\n\nOne allocation. Full diversification. Institutional-quality diligence. Professional operations. That's the model.\n\nThe question isn't whether alternatives belong in advisor portfolios \u2014 the data has settled that debate. The question is whether advisors have the right partner and infrastructure to access them with institutional rigor.\n\nThe advisors who build this capability now will compound that advantage for years. The ones who wait will spend the next three years building what they could have accessed today.\n\nWhat are you seeing in your practice? How are you thinking about alternatives allocations for your clients? I'd love to hear \u2014 drop a comment or send me a message.\n\n#AlternativeInvestments #InstitutionalInvesting #HedgeFunds #RIA #AltsAccess",
+      "newsletter": "**Industry Validation & Momentum**\n\n\n$21B in net inflows to hedge funds in Q1 2025. The tide is turning.\n\n\n**The data is striking:** $21B. This is the kind of structural shift that separates advisors who are positioned for the next decade from those still running yesterday's playbook.\n\nAs our CEO Tory puts it: \"BlackRock just told investors to increase hedge fund allocations\"\n\nThis is precisely the challenge Equi's Custom Fund of Funds was built to address. One allocation gives advisors diversified, institutional-quality access to alternatives \u2014 without the operational complexity of managing multiple fund relationships, LP agreements, and capital calls.\n\nThe advisors who move now will have a structural advantage. The ones who wait will spend the next three years building what they could have accessed today.\n\n**\u2192 [Schedule a 15-minute call](https://www.joinequi.com) to learn how Equi can help your practice access institutional alternatives.**",
+      "twitter_thread": [
+        "$21B in net inflows to hedge funds in Q1 2025. The tide is turning. \ud83e\uddf5",
+        "The data: $21B. This is not a blip \u2014 it's a structural shift.",
+        "BlackRock just told investors to increase hedge fund allocations",
+        "This validates what we've been saying for 2 years",
+        "The difference: most RIAs can't access institutional hedge funds",
+        "This is why @join_equi exists \u2014 institutional alternatives access for independent RIAs. One allocation, full diversification.",
+        "If you're an RIA thinking about alternatives, let's talk. DM or visit https://www.joinequi.com @join_equi"
+      ],
+      "email": "There's meaningful momentum building in alternatives \u2014 and it matters for how advisors serve their clients going forward. The numbers are striking: $21B.\n\nBlackRock just told investors to increase hedge fund allocations\n\nThis is the core challenge we hear from advisors every day: the investment case for alternatives is clear, but the infrastructure to execute is missing. Our Custom Fund of Funds is specifically designed for firms like yours \u2014 providing institutional-quality alternatives access through a single, operationally simple allocation.\n\nWe'd welcome the chance to walk through how Equi's approach could complement your current allocation strategy. Happy to set up a brief call at your convenience."
+    },
+    "compliance": {
+      "linkedin": {
+        "passed": true,
+        "flags": 0,
+        "warnings": 0
+      },
+      "newsletter": {
+        "passed": true,
+        "flags": 0,
+        "warnings": 0
+      },
+      "email": {
+        "passed": true,
+        "flags": 0,
+        "warnings": 0
+      },
+      "twitter": {
+        "passed": true,
+        "flags": 0,
+        "warnings": 0
+      }
+    },
+    "method": "template"
+  },
+  {
+    "input": {
+      "id": "input_3",
+      "text": "Just got back from the Titan Investors roundtable in DC. The energy around alternatives was palpable \u2014 every advisor I spoke to is thinking about how to add hedge fund exposure but they're all hitting the same wall: they don't have the team, the relationships, or the operational infrastructure to do it right. One CIO of a $4B firm literally said 'I know I need this but I don't know where to start.' That's our pitch in one sentence.",
+      "founder": "tory",
+      "label": "Slack Message \u2014 Titan Investors Roundtable Recap",
+      "description": "Tory's Slack message after attending the Titan Investors roundtable in DC"
+    },
+    "analysis": {
+      "topic": "Conference & Advisor Sentiment",
+      "sentiment": "bullish",
+      "angle": "On the ground with advisors: what they're saying about alternatives"
+    },
+    "content": {
+      "linkedin": "I just got back from a room full of the smartest advisors in the country. Here's what they're all saying.\n\nLet that sink in for a moment. Because the implications for how we construct portfolios \u2014 and how we serve clients \u2014 are significant. Every week, I talk to advisors who are grappling with this exact challenge, and the conversation always lands in the same place.\n\nWe're in a current market environment environment, and what we're hearing from the independent RIAs we work with \u2014 firms managing $2B to $15B \u2014 is consistent: the old playbook isn't working anymore. The assumptions that guided portfolio construction for the last two decades are breaking down in real time, and the advisors who recognize this first will have a structural advantage.\n\nThe energy around alternatives was palpable \u2014 every advisor I spoke to is thinking about how to add hedge fund exposure but they're all hitting the same wall: they don't have the team, the relationships, or the operational infrastructure to do it right.\n\nAnd this isn't just about performance. It's about risk management, it's about genuine diversification, and it's about meeting the increasingly sophisticated expectations of high-net-worth clients who know what institutional portfolios look like.\n\nOne CIO of a $4B firm literally said 'I know I need this but I don't know where to start.' That's our pitch in one sentence.\n\nThe firms that figure this out first won't just retain their existing clients \u2014 they'll attract new ones. Because in a world where every advisor has access to the same ETFs and model portfolios, alternatives capability is a genuine differentiator.\n\nHere's the institutional reality: endowments like Yale and Stanford have allocated 25-40% to alternatives for two decades, generating meaningfully higher risk-adjusted returns than traditional 60/40 benchmarks. Pensions and sovereign wealth funds have followed the same playbook. Yet the average independent RIA allocates less than 5% to alternatives. That gap represents both a risk to client portfolios and an enormous opportunity for advisors who close it.\n\nIt's worth noting that firms like Titan Investors are actively increasing their focus on alternative allocations for the wealth channel. The direction of travel is clear \u2014 and the question for independent advisors isn't whether to allocate, but how to do it with institutional rigor.\n\nHaving recently attended Titan Investors, the energy around this topic is palpable. Every conversation comes back to the same theme: advisors want alternatives exposure, but they need a partner who understands both the investment complexity and the operational reality of running an RIA.\n\nAt Equi, we've spent years building the infrastructure that solves this problem. Wall Street expertise and Silicon Valley innovation \u2014 because advisors deserve institutional-quality alternatives access without building it from scratch.\n\nWe handle the diligence, the manager selection, the operational complexity, and the ongoing monitoring \u2014 so advisors can focus on what they do best: serving their clients.\n\nThe question isn't whether alternatives belong in advisor portfolios \u2014 the data has settled that debate. The question is whether advisors have the right partner and infrastructure to access them with institutional rigor.\n\nThe advisors who build this capability now will compound that advantage for years. The ones who wait will spend the next three years building what they could have accessed today.\n\nWhat are you seeing in your practice? How are you thinking about alternatives allocations for your clients? I'd love to hear \u2014 drop a comment or send me a message.\n\n#WealthManagement #AdvisorInsights #AlternativeInvestments #Operations #RIA",
+      "newsletter": "**Conference & Advisor Sentiment**\n\n\nI just got back from a room full of the smartest advisors in the country. Here's what they're all saying.\n\n\n**The data is striking:** $4B. This is the kind of structural shift that separates advisors who are positioned for the next decade from those still running yesterday's playbook.\n\nAs our CEO Tory puts it: \"The energy around alternatives was palpable \u2014 every advisor I spoke to is thinking about how to add hedge fund exposure but they're all hitting the same wall: they don't have the team, the relationships, or the operational infrastructure to do it right.\"\n\nEqui was purpose-built for this moment \u2014 giving independent RIAs the same alternatives infrastructure that institutions take for granted, without requiring a 20-person investment team to execute.\n\nThe advisors who move now will have a structural advantage. The ones who wait will spend the next three years building what they could have accessed today.\n\n**\u2192 [Schedule a 15-minute call](https://www.joinequi.com) to learn how Equi can help your practice access institutional alternatives.**",
+      "twitter_thread": [
+        "I just got back from a room full of the smartest advisors in the country. Here's what they're all saying. \ud83e\uddf5",
+        "The data: $4B. This is not a blip \u2014 it's a structural shift.",
+        "Just got back from the Titan Investors roundtable in DC.",
+        "The energy around alternatives was palpable \u2014 every advisor I spoke to is thinking about how to add hedge fund exposure but they're all hitting the same wall: they don't have the team, the relationships, or the operational infrastructure to do it right.",
+        "One CIO of a $4B firm literally said 'I know I need this but I don't know where to start.' That's our pitch in one sentence.",
+        "This is why @join_equi exists \u2014 institutional alternatives access for independent RIAs. One allocation, full diversification.",
+        "If you're an RIA thinking about alternatives, let's talk. DM or visit https://www.joinequi.com @join_equi"
+      ],
+      "email": "There's meaningful momentum building in alternatives \u2014 and it matters for how advisors serve their clients going forward. The numbers are striking: $4B.\n\nThe energy around alternatives was palpable \u2014 every advisor I spoke to is thinking about how to add hedge fund exposure but they're all hitting the same wall: they don't have the team, the relationships, or the operational infrastructure to do it right.\n\nThis is the core challenge we hear from advisors every day: the investment case for alternatives is clear, but the infrastructure to execute is missing.\n\nWe'd welcome the chance to walk through how Equi's approach could complement your current allocation strategy. Happy to set up a brief call at your convenience."
+    },
+    "compliance": {
+      "linkedin": {
+        "passed": true,
+        "flags": 0,
+        "warnings": 0
+      },
+      "newsletter": {
+        "passed": true,
+        "flags": 0,
+        "warnings": 0
+      },
+      "email": {
+        "passed": true,
+        "flags": 0,
+        "warnings": 0
+      },
+      "twitter": {
+        "passed": true,
+        "flags": 0,
+        "warnings": 0
+      }
+    },
+    "method": "template"
+  }
+]
